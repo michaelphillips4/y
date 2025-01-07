@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="https://orca1.orca-tools.com/orca.min.css" />
+    <link rel="stylesheet" href="https://area2.orca-tools.com/style.css" />
+    <script src="https://orca1.orca-tools.com/orca.binder.js"></script>
+    <script src="https://orca1.orca-tools.com/orca.js"></script>
+    <style>
+      article {
+        border-radius: 33px;
+        border-top-left-radius: 10px;
+        margin-bottom: 10px;
+      }
+
+      .message-from {
+        float: right;
+        font-size: smaller;
+        margin: 10px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="center">
+      <h1 >Y (formally known as twatter)</h1>
+      <blockquote>
+        An independent social media platform. To help people to share information. Free from the influence of dictators and madmen.
+      </blockquote>
+    </header>
+    <main>
+      <div id="user-app">
+        <div id="user-editor">
+          Name:<input type="text" data-bind="name" /> About:<br />
+          <textarea rows="5" cols="10" data-bind="about"></textarea>
+          <br />
+          <button id="user-save">Save</button>
+        </div>
+
+        <section id="user-display">
+          <button id="user-edit" class="right">Edit</button>
+          <h2 data-bind="name" contenteditable="true"></h2>
+          <blockquote data-bind="about"></blockquote>
+        </section>
+      </div>
+      <hr />
+      <h2>Messages</h2>
+
+      <textarea rows="5" cols="10" id="message-message"> </textarea>
+      <br />
+      <button id="message-post">Post</button>
+
+      <div id="message-messages"></div>
+    </main>
+
+    <script>
+      const v = JSON.parse(sessionStorage.getItem('messages'))
+
+      const messages = new Map(v)
+
+      const saveUser = () => {
+        userEditorVisible = !userEditorVisible
+        if (userEditorVisible) {
+          show('user-editor')
+          hide('user-display')
+        } else {
+          hide('user-editor')
+          show('user-display')
+        }
+      }
+
+      const addMessage = () => {
+        const index = 'key' + messages.size.toString()
+        const message = {
+          body: document.getElementById('message-message').value,
+          index,
+          from: model['name']
+        }
+        messages.set(index, message)
+        let x = JSON.stringify(Array.from(messages.entries()))
+        sessionStorage.setItem('messages', x.toString())
+      }
+
+      const listMessages = () => {
+        const m = document.getElementById('message-messages')
+        let temp = ''
+        for (const [key, value] of messages) {
+          temp += `<article data-index=${key}>${value.body}<div class="message-from">from:${value.from}</div></article>`
+        }
+        m.innerHTML = temp
+      }
+
+      hide('user-editor')
+      let userEditorVisible = false
+      //user-editor
+      document.getElementById('user-edit').addEventListener('click', saveUser)
+
+      document.getElementById('user-save').addEventListener('click', saveUser)
+
+      document.getElementById('message-post').addEventListener('click', () => {
+        addMessage()
+        listMessages()
+      })
+
+      listMessages()
+
+      // define model if required for initial load.
+      const model = {
+        name: 'Pellentesque Sapien',
+        about: `
+            Fusce pulvinar ac tortor sit amet suscipit. 
+            Proin molestie, nunc vel venenatis iaculis, 
+            urna turpis semper tellus, non hendrerit risus tellus eu neque. 
+            Pellentesque quam sapien, maximus a sem sit amet, varius facilisis augue. `
+      }
+
+      // define model changed method if required.
+      const modelChanged = (key, value) => {
+        console.log(key, value)
+      }
+
+      // Initialize the Binder with the app element , model and modelChanged method,
+      new Binder('user-app', model, modelChanged)
+    </script>
+  </body>
+</html>
