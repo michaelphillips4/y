@@ -2,47 +2,83 @@
 <html lang="en">
   <head>
     <link rel="stylesheet" href="https://orca1.orca-tools.com/orca.min.css" />
-    <link rel="stylesheet" href="https://area2.orca-tools.com/style.css" />
+   
     <script src="https://orca1.orca-tools.com/orca.binder.js"></script>
     <script src="https://orca1.orca-tools.com/orca.js"></script>
     <style>
+
+header {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  background-color: black;
+  color: white;
+}
+
+
+#user-editor{
+  padding-top: 38px;
+}
+
       article {
         border-radius: 33px;
         border-top-left-radius: 10px;
-        margin-bottom: 10px;
+        padding: 20px;
+        background-color: white; 
+        min-height: 100px; 
+        width: 80%;
+        margin: auto;
+        margin-bottom: 15px;
       }
 
       .message-from {
+        padding-top: 80px;
         float: right;
         font-size: smaller;
         margin: 10px;
+      }
+
+      #message-messages{
+       padding: 20px;
+       margin-top: 10px;
+        background-color: rgb(233, 233, 233);
       }
     </style>
   </head>
 
   <body>
     <header class="center">
-      <h1 >Y (formally known as twatter)</h1>
+      <h1 >Y</h1>
       <blockquote>
-        An independent social media platform. To help people to share information. Free from the influence of dictators and madmen.
+        An independent British social media platform. To allow the free sharing of honest kind information. Free from the influence of dictators, liars and madmen.
+        Formerly know as twatter. 
       </blockquote>
     </header>
     <main>
       <div id="user-app">
         <div id="user-editor">
+           <button id="user-save" class="right">Save</button>
           Name:<input type="text" data-bind="name" /> About:<br />
           <textarea rows="5" cols="10" data-bind="about"></textarea>
           <br />
-          <button id="user-save">Save</button>
+         
         </div>
 
         <section id="user-display">
           <button id="user-edit" class="right">Edit</button>
-          <h2 data-bind="name" contenteditable="true"></h2>
-          <blockquote data-bind="about"></blockquote>
+          <h2 data-bind="name"></h2>
+          <b>about</b> <br />
+          <blockquote data-bind="about">
+
+          </blockquote>
+        
         </section>
       </div>
       <hr />
+
+      <nav>
+      <a href="#">Subscribers</a> || <a href="#">Subscribe</a>  <a href="#" class="right">Lists</a>
+      </nav>
+
       <h2>Messages</h2>
 
       <textarea rows="5" cols="10" id="message-message"> </textarea>
@@ -82,12 +118,17 @@
 
       const listMessages = () => {
         const m = document.getElementById('message-messages')
-        let temp = ''
+        let temp = [];
         for (const [key, value] of messages) {
-          temp += `<article data-index=${key}>${value.body}<div class="message-from">from:${value.from}</div></article>`
+          temp.push(`<article data-index=${key}>${value.body}
+            <div class="message-from"><a href="#">edit</a> || <a href="#">delete</a> from:${value.from}</div></article>`);
         }
-        m.innerHTML = temp
+        m.innerHTML = temp.reverse().join("");
       }
+
+      
+
+
 
       hide('user-editor')
       let userEditorVisible = false
@@ -105,14 +146,9 @@
 
       // define model if required for initial load.
       const model = {
-        name: 'Pellentesque Sapien',
-        about: `
-            Fusce pulvinar ac tortor sit amet suscipit. 
-            Proin molestie, nunc vel venenatis iaculis, 
-            urna turpis semper tellus, non hendrerit risus tellus eu neque. 
-            Pellentesque quam sapien, maximus a sem sit amet, varius facilisis augue. `
-      }
-
+        name: 'Mark Smith',
+        about: `I like music, bird watching and javascript. 
+            `};
       // define model changed method if required.
       const modelChanged = (key, value) => {
         console.log(key, value)
@@ -121,5 +157,6 @@
       // Initialize the Binder with the app element , model and modelChanged method,
       new Binder('user-app', model, modelChanged)
     </script>
+     <footer class="center">v1 by Michael Phillips <a href="http:\\www.area2.co.uk">Home</a></footer>
   </body>
 </html>
