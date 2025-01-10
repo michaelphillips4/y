@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="https://orca1.orca-tools.com/orca.min.css" />
+   
+    <script src="https://orca1.orca-tools.com/orca.binder.js"></script>
+    <script src="https://orca1.orca-tools.com/orca.js"></script>
+    <style>
+
+header {
+  padding-top: 1px;
+  padding-bottom: 1px;
+  background-color: black;
+  color: white;
+}
+
+
+#user-editor{
+  padding-top: 38px;
+}
+
+      article {
+        border-radius: 33px;
+        border-top-left-radius: 10px;
+        padding: 20px;
+        background-color: white; 
+        min-height: 100px; 
+        width: 80%;
+        margin: auto;
+        margin-bottom: 15px;
+      }
+
+      .message-from {
+        padding-top: 80px;
+        float: right;
+        font-size: smaller;
+        margin: 10px;
+      }
+
+      #message-messages{
+       padding: 20px;
+       margin-top: 10px;
+        background-color: rgb(233, 233, 233);
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="center">
+
+     
+      <h1 >Y</h1>
+      <blockquote>
+        An independent British social media platform. To allow the free sharing of honest kind information. Free from the influence of dictators, liars and madmen.
+        Formerly know as twatter. 
+      </blockquote>    
+    
+    </header>
+    <main> 
+      <div class="center">
+        <button id="signOut" >Log out</button>
+      </div>
+      <div id="user-app">
+        <div id="user-editor">
+           <button id="user-save" class="right">Save</button>
+          Name:<input type="text" data-bind="name" /> About:<br />
+          <textarea rows="5" cols="10" data-bind="about"></textarea>
+          <br />
+         
+        </div>
+
+        <section id="user-display">
+          <button id="user-edit" class="right">Edit</button>
+          <h2 data-bind="name"></h2>
+          <b>about</b> <br />
+          <blockquote data-bind="about">
+
+          </blockquote>
+        
+        </section>
+      </div>
+      <hr />
+
+      <nav>
+      <a href="#">Subscribers</a> || <a href="#">Subscribe</a>  <a href="#" class="right">Lists</a>
+      </nav>
+
+      <h2>Messages</h2>
+
+      <textarea rows="5" cols="10" id="message-message"> </textarea>
+      <br />
+      <button id="message-post">Post</button>
+
+      <div id="message-messages"></div>
+    </main>
+
+    <script>
+
+
+console.log();
+
+      const v = JSON.parse(sessionStorage.getItem('messages'))
+
+      const messages = new Map(v)
+
+      const saveUser = () => {
+        userEditorVisible = !userEditorVisible
+        if (userEditorVisible) {
+          show('user-editor')
+          hide('user-display')
+        } else {
+          hide('user-editor')
+          show('user-display')
+        }
+      }
+
+      const addMessage = () => {
+        const index = 'key' + messages.size.toString()
+        const message = {
+          body: document.getElementById('message-message').value,
+          index,
+          from: model['name']
+        }
+        messages.set(index, message)
+        let x = JSON.stringify(Array.from(messages.entries()))
+        sessionStorage.setItem('messages', x.toString())
+      }
+
+      const listMessages = () => {
+        const m = document.getElementById('message-messages')
+        let temp = [];
+        for (const [key, value] of messages) {
+          temp.push(`<article data-index=${key}>${value.body}
+            <div class="message-from"><a href="#">edit</a> || <a href="#">delete</a> from:${value.from}</div></article>`);
+        }
+        m.innerHTML = temp.reverse().join("");
+      }
+
+      
+
+
+
+      hide('user-editor')
+      let userEditorVisible = false
+      //user-editor
+      document.getElementById('user-edit').addEventListener('click', saveUser)
+
+      document.getElementById('user-save').addEventListener('click', saveUser)
+
+      document.getElementById('message-post').addEventListener('click', () => {
+        addMessage()
+        listMessages()
+      })
+
+      listMessages()
+
+      // define model if required for initial load.
+      const model = {
+        name: 'Mark Smith',
+        about: `I like music, bird watching and javascript. 
+            `};
+      // define model changed method if required.
+      const modelChanged = (key, value) => {
+        console.log(key, value)
+      }
+
+      // Initialize the Binder with the app element , model and modelChanged method,
+      new Binder('user-app', model, modelChanged)
+    </script>
+
+
+
+<script type="module">
+  import { signOutRedirect } from "/src/xf3.js";
+
+  document.getElementById("signOut").addEventListener("click", async () => {
+      await signOutRedirect();
+  });
+</script>
+
+     <footer class="center">v1 by Michael Phillips <a href="http:\\www.area2.co.uk">Home</a></footer>
+  </body>
+</html>
