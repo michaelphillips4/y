@@ -3,7 +3,7 @@ import { UserManager } from 'oidc-client-ts';
 const cognitoAuthConfig = {
     authority: "https://cognito-idp.eu-west-2.amazonaws.com/eu-west-2_NOOFfbhA2",
     client_id: "7eq0r136ivj5d2ihon9fm8lb2n",
-    redirect_uri: window.location.origin + "/main.html",
+    redirect_uri: window.location.origin + "/main",
     response_type: "code",
     scope: "email openid phone"
 };
