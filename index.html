@@ -2,44 +2,32 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <link rel="stylesheet" href="https://orca1.orca-tools.com/orca.min.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Y</title>
+    <title>Y - social media</title>
     <style>
 
-      main {
-        min-height: auto;
+      h1 {
+        text-align: center;
+        padding: 200px;
       }
     </style>
   </head>
   <body>
-    <main>
-      <header class="center">
-        <h1>Y</h1>
-        <blockquote>
-          An independent British social media platform. To allow the free
-          sharing of honest kind information. Free from the influence of
-          dictators, liars and madmen. Formerly know as twatter.
-        </blockquote>
-      </header>
-
-      <div class="center">
-        <div>
-          <button id="signIn">Sign In</button>
-        </div>
-      </div>
-    </main>
+   
+    
+         <h1><a href="#" id="signIn">Sign In</a></h1>
+        
   </body>
   <script type="module">
     import { userManager } from "/src/xf3.js";
-
+    console.log(userManager);
     document.getElementById("signIn").addEventListener("click", async () => {
       await userManager.signinRedirect();
     });
 
 
 
-    
+
   //   if(window.location.pathname.includes("main/"))
   // {
 
