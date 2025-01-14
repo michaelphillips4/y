@@ -36,17 +36,11 @@
   </body>
   <script type="module">
     import { userManager } from "/src/xf3.js";
-    console.log(userManager);
+    console.log(userManager,userManager.cognitoAuthConfig);
     document.getElementById("signIn").addEventListener("click", async () => {
+      console.log("signing in");
       await userManager.signinRedirect();
     });
 
-    //   if(window.location.pathname.includes("main/"))
-    // {
-
-    //  const x = `${window.location.origin}\\${window.location.pathname.replaceAll("/","")}.html`
-
-    //   window.location.href = x;
-    // }
   </script>
 </html>
