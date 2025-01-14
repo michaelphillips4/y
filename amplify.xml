@@ -7,7 +7,4 @@ frontend:
         - echo pwd
         - npm i
         - npm run build
-  artifacts:
-      baseDirectory: UI/dist
-      files:
-        - '**/*'
+ 
