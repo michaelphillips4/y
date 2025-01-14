@@ -3,10 +3,7 @@ frontend:
   phases:
     build:
       commands:
-        - echo build started
         - cd UI/ReactVite
-        - echo pwd
-        - npm i
         - npm run build
   artifacts:
     baseDirectory: /UI/ReactVite/dist
