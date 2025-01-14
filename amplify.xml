@@ -1,0 +1,13 @@
+version: 1
+frontend:
+  phases:
+   build:
+      commands:
+        - cd UI
+        - echo pwd
+        - npm i
+        - npm run build
+  artifacts:
+      baseDirectory: /
+      files:
+        - '**/*'
