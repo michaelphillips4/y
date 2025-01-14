@@ -11,6 +11,6 @@ frontend:
         - npm i
         - npm run build
   artifacts:
-    baseDirectory: UI/dist
-    files:
-      - '**/*'
+      baseDirectory: UI/dist
+      files:
+        - '**/*'
