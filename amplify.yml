@@ -4,11 +4,11 @@ frontend:
     build:
       commands:
         - echo build started
-        - cd UI
+        - cd UI/ReactVite
         - echo pwd
         - npm i
         - npm run build
   artifacts:
-    baseDirectory: /UI/dist
+    baseDirectory: /UI/ReactVite/dist
     files:
       - '**/*'
