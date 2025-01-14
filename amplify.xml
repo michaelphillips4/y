@@ -1,0 +1,16 @@
+version: 1
+frontend:
+  phases:
+    preBuild:
+      commands:
+        - cd UI
+        - npm ci
+    build:
+      commands:
+        - echo pwd
+        - npm i
+        - npm run build
+  artifacts:
+    base-directory: dist/*
+    files:
+      - '**/*'
