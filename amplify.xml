@@ -1,12 +1,9 @@
 version: 1
 frontend:
   phases:
-    preBuild:
+   build:
       commands:
         - cd UI
-        - npm ci
-    build:
-      commands:
         - echo pwd
         - npm i
         - npm run build
