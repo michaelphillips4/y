@@ -4,6 +4,7 @@ frontend:
     build:
       commands:
         - cd UI/ReactVite
+        - npm install
         - npm run build
   artifacts:
     baseDirectory: /UI/ReactVite/dist
