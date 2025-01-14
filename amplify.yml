@@ -1,13 +1,14 @@
 version: 1
 frontend:
   phases:
-   build:
+    build:
       commands:
+        - echo build started
         - cd UI
         - echo pwd
         - npm i
         - npm run build
   artifacts:
-      baseDirectory: /
-      files:
-        - '**/*'
+    baseDirectory: /UI/dist
+    files:
+      - '**/*'
